@@ -117,7 +117,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "InventoryForm";
-            this.Text = "Form1";
+            this.Text = "Inventory";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.msMaintain.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
