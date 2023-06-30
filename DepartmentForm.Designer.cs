@@ -36,8 +36,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "DepartmentForm";
+
             this.Text = "Departments";
             this.Load += new System.EventHandler(this.DepartmentForm_Load);
+
             this.ResumeLayout(false);
 
         }

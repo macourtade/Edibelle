@@ -83,8 +83,13 @@
             this.Controls.Add(this.msMaintain);
             this.MainMenuStrip = this.msMaintain;
             this.Name = "InventoryForm";
+
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventoryForm_FormClosing);
             this.Load += new System.EventHandler(this.InventoryForm_Load);
+
+            this.Text = "Inventory";
+
+
             this.msMaintain.ResumeLayout(false);
             this.msMaintain.PerformLayout();
             this.ResumeLayout(false);
