@@ -41,7 +41,7 @@ namespace Edibelle
             panel.Controls.AddRange(new Control[] { reloadButton, submitButton });
 
             Controls.AddRange(new Control[] { dataGridView1, panel });
-            Load += new EventHandler(Form1_Load);
+            Load += new EventHandler(InventoryForm_Load);
             Text = "Inventory";
         }
 
@@ -50,7 +50,7 @@ namespace Edibelle
          * Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\Edibelle\DB\edibelle.mdf;Integrated Security = True; Connect Timeout = 30
         */
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void InventoryForm_Load(object sender, EventArgs e)
         {
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
@@ -107,9 +107,38 @@ namespace Edibelle
             }
         }
 
-        private void employeesToolStripMenuItem1_Click(object sender, EventArgs e)
+
+        private void InventoryForm_FormClosing(object sender, FormClosingEventArgs e)
         {
 
+            
+        }
+
+        private void tsmDepartments_Click(object sender, EventArgs e)
+        {
+            DepartmentForm deptFrm = new DepartmentForm();
+            deptFrm.ShowDialog();
+
+            //should we refresh inventory grid if we close one of the  maintain forms
+            reloadButton.PerformClick();
+        }
+
+        private void tsmEmployees_Click(object sender, EventArgs e)
+        {
+            //EmployeeForm empFrm = new EmployeeForm();
+            //empFrm.ShowDialog();
+
+            //should we refresh inventory grid if we close one of the  maintain forms
+            reloadButton.PerformClick();
+        }
+
+        private void tsmLocations_Click(object sender, EventArgs e)
+        {
+            LocationForm locFrm = new LocationForm();
+            locFrm.ShowDialog();
+
+            //should we refresh inventory grid if we close one of the  maintain forms
+            reloadButton.PerformClick();
         }
     }
 }

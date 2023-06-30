@@ -113,6 +113,11 @@ namespace Edibelle
                 "valid for your system.");
         }
     }
-}
+
+        private void DepartmentForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
 

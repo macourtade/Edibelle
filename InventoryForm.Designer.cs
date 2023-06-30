@@ -28,116 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.msMaintain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.employeesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.locationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.departmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.msMaintain = new System.Windows.Forms.MenuStrip();
             this.maintainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.employeesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.locationsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.departmentsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmDepartments = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmEmployees = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmLocations = new System.Windows.Forms.ToolStripMenuItem();
             this.msMaintain.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // msMaintain
             // 
             this.msMaintain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.employeesToolStripMenuItem,
-            this.locationsToolStripMenuItem,
-            this.departmentsToolStripMenuItem});
-            this.msMaintain.Name = "Mai";
-            this.msMaintain.Size = new System.Drawing.Size(143, 70);
-            this.msMaintain.Text = "Maintain";
-            // 
-            // employeesToolStripMenuItem
-            // 
-            this.employeesToolStripMenuItem.Name = "employeesToolStripMenuItem";
-            this.employeesToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.employeesToolStripMenuItem.Text = "Employees";
-            // 
-            // locationsToolStripMenuItem
-            // 
-            this.locationsToolStripMenuItem.Name = "locationsToolStripMenuItem";
-            this.locationsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.locationsToolStripMenuItem.Text = "Locations";
-            // 
-            // departmentsToolStripMenuItem
-            // 
-            this.departmentsToolStripMenuItem.Name = "departmentsToolStripMenuItem";
-            this.departmentsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
-            this.departmentsToolStripMenuItem.Text = "Departments";
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.maintainToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(559, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
+            this.msMaintain.Location = new System.Drawing.Point(0, 0);
+            this.msMaintain.Name = "msMaintain";
+            this.msMaintain.Size = new System.Drawing.Size(606, 24);
+            this.msMaintain.TabIndex = 0;
+            this.msMaintain.Text = "menuStrip1";
             // 
             // maintainToolStripMenuItem
             // 
             this.maintainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.employeesToolStripMenuItem1,
-            this.locationsToolStripMenuItem1,
-            this.departmentsToolStripMenuItem1});
+            this.tsmDepartments,
+            this.tsmEmployees,
+            this.tsmLocations});
             this.maintainToolStripMenuItem.Name = "maintainToolStripMenuItem";
             this.maintainToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.maintainToolStripMenuItem.Text = "Maintain";
             // 
-            // employeesToolStripMenuItem1
+            // tsmDepartments
             // 
-            this.employeesToolStripMenuItem1.Name = "employeesToolStripMenuItem1";
-            this.employeesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.employeesToolStripMenuItem1.Text = "Employees";
-            this.employeesToolStripMenuItem1.Click += new System.EventHandler(this.employeesToolStripMenuItem1_Click);
+            this.tsmDepartments.Name = "tsmDepartments";
+            this.tsmDepartments.Size = new System.Drawing.Size(180, 22);
+            this.tsmDepartments.Text = "Departments";
+            this.tsmDepartments.Click += new System.EventHandler(this.tsmDepartments_Click);
             // 
-            // locationsToolStripMenuItem1
+            // tsmEmployees
             // 
-            this.locationsToolStripMenuItem1.Name = "locationsToolStripMenuItem1";
-            this.locationsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.locationsToolStripMenuItem1.Text = "Locations";
+            this.tsmEmployees.Name = "tsmEmployees";
+            this.tsmEmployees.Size = new System.Drawing.Size(180, 22);
+            this.tsmEmployees.Text = "Employees";
+            this.tsmEmployees.Click += new System.EventHandler(this.tsmEmployees_Click);
             // 
-            // departmentsToolStripMenuItem1
+            // tsmLocations
             // 
-            this.departmentsToolStripMenuItem1.Name = "departmentsToolStripMenuItem1";
-            this.departmentsToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.departmentsToolStripMenuItem1.Text = "Departments";
+            this.tsmLocations.Name = "tsmLocations";
+            this.tsmLocations.Size = new System.Drawing.Size(180, 22);
+            this.tsmLocations.Text = "Locations";
+            this.tsmLocations.Click += new System.EventHandler(this.tsmLocations_Click);
             // 
             // InventoryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(559, 287);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.ClientSize = new System.Drawing.Size(606, 554);
+            this.Controls.Add(this.msMaintain);
+            this.MainMenuStrip = this.msMaintain;
             this.Name = "InventoryForm";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventoryForm_FormClosing);
+            this.Load += new System.EventHandler(this.InventoryForm_Load);
             this.msMaintain.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.msMaintain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
+
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip msMaintain;
-        private System.Windows.Forms.ToolStripMenuItem employeesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem locationsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem departmentsToolStripMenuItem;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip msMaintain;
         private System.Windows.Forms.ToolStripMenuItem maintainToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem employeesToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem locationsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem departmentsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tsmDepartments;
+        private System.Windows.Forms.ToolStripMenuItem tsmEmployees;
+        private System.Windows.Forms.ToolStripMenuItem tsmLocations;
     }
 }
 
