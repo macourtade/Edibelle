@@ -29,9 +29,6 @@ namespace Edibelle
         {
             InitializeComponent();
 
-
-        InitializeComponent();
-
         dataGridView1.Dock = DockStyle.Fill;
 
         reloadButton.Text = "Reload";

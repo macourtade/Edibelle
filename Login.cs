@@ -24,7 +24,7 @@ namespace Edibelle
             InitializeComponent();
         }
 
-        
+        public DataTable LoggedInUser;
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -53,11 +53,12 @@ namespace Edibelle
 
                 if (table.Rows.Count > 0)
                 {
+                    LoggedInUser = table;
                     //they are logged in
                     //we need to save the user to a variable so they can check later
 
                     
-                    InventoryForm inventoryForm = new InventoryForm();
+                    InventoryForm inventoryForm = new InventoryForm(LoggedInUser);
                     this.Hide();
                     inventoryForm.ShowDialog();
                     txtUsername.Text = "";
@@ -70,7 +71,8 @@ namespace Edibelle
                 {
                     //there is a problem 
                     //redirect back to the login for retry
-                    MessageBox.Show("");
+                    MessageBox.Show("User not found.  Please try again");
+                    txtUsername.Focus();
                 }
             }
             catch (Exception ex) { 
@@ -84,6 +86,11 @@ namespace Edibelle
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

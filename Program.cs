@@ -16,7 +16,7 @@ namespace Edibelle
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InventoryForm());
+            Application.Run(new Login());
         }
     }
 }

@@ -15,19 +15,20 @@ namespace Edibelle
 {
     public partial class InventoryForm : Form
     {
-
+        private DataTable cUser;
         private DataGridView dataGridView1 = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
 
-        public InventoryForm()
+        public InventoryForm(DataTable CurrentUser)
         {
             InitializeComponent();
-
+            
+            cUser = CurrentUser;
+            
             dataGridView1.Dock = DockStyle.Fill;
-
             reloadButton.Text = "Reload";
             submitButton.Text = "Submit";
             reloadButton.Click += new EventHandler(ReloadButton_Click);
@@ -45,6 +46,7 @@ namespace Edibelle
             Text = "Inventory";
         }
 
+
         // MY Connection String
         /*
          * Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\Edibelle\DB\edibelle.mdf;Integrated Security = True; Connect Timeout = 30
@@ -52,10 +54,35 @@ namespace Edibelle
 
         private void InventoryForm_Load(object sender, EventArgs e)
         {
-            // Bind the DataGridView to the BindingSource
-            // and load the data from the database.
-            dataGridView1.DataSource = bindingSource1;
-            GetData("select * from Inventory");
+            try
+            {
+                
+                foreach (DataRow dr in cUser.Rows)
+                {
+                    if (dr["isAdmin"].Equals(false))
+                    {
+                        msMaintain.Enabled = false;
+                    }
+                    else
+                    {
+                        msMaintain.Enabled = true;
+                        
+                    }
+                    
+                }
+                // Bind the DataGridView to the BindingSource
+                // and load the data from the database.
+                dataGridView1.DataSource = bindingSource1;
+                GetData("select * from Inventory");
+
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+           
+
+           
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
@@ -125,8 +152,8 @@ namespace Edibelle
 
         private void tsmEmployees_Click(object sender, EventArgs e)
         {
-            //EmployeeForm empFrm = new EmployeeForm();
-            //empFrm.ShowDialog();
+            EmployeeForm empFrm = new EmployeeForm();
+            empFrm.ShowDialog();
 
             //should we refresh inventory grid if we close one of the  maintain forms
             reloadButton.PerformClick();
