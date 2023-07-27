@@ -126,11 +126,9 @@ namespace Edibelle
                 dataGridView1.AutoResizeColumns(
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException)
+            catch (SqlException sqlex)
             {
-                MessageBox.Show("To run this example, replace the value of the " +
-                    "connectionString variable with a connection string that is " +
-                    "valid for your system.");
+                MessageBox.Show(sqlex.Message);
             }
         }
 
