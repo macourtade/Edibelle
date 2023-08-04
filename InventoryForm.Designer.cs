@@ -38,9 +38,10 @@
             // 
             // msMaintain
             // 
+            this.msMaintain.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.msMaintain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.maintainToolStripMenuItem});
-            this.msMaintain.Location = new System.Drawing.Point(0, 0);
+            this.msMaintain.Location = new System.Drawing.Point(0, 530);
             this.msMaintain.Name = "msMaintain";
             this.msMaintain.Size = new System.Drawing.Size(606, 24);
             this.msMaintain.TabIndex = 0;
@@ -59,21 +60,21 @@
             // tsmDepartments
             // 
             this.tsmDepartments.Name = "tsmDepartments";
-            this.tsmDepartments.Size = new System.Drawing.Size(180, 22);
+            this.tsmDepartments.Size = new System.Drawing.Size(142, 22);
             this.tsmDepartments.Text = "Departments";
             this.tsmDepartments.Click += new System.EventHandler(this.tsmDepartments_Click);
             // 
             // tsmEmployees
             // 
             this.tsmEmployees.Name = "tsmEmployees";
-            this.tsmEmployees.Size = new System.Drawing.Size(180, 22);
+            this.tsmEmployees.Size = new System.Drawing.Size(142, 22);
             this.tsmEmployees.Text = "Employees";
             this.tsmEmployees.Click += new System.EventHandler(this.tsmEmployees_Click);
             // 
             // tsmLocations
             // 
             this.tsmLocations.Name = "tsmLocations";
-            this.tsmLocations.Size = new System.Drawing.Size(180, 22);
+            this.tsmLocations.Size = new System.Drawing.Size(142, 22);
             this.tsmLocations.Text = "Locations";
             this.tsmLocations.Click += new System.EventHandler(this.tsmLocations_Click);
             // 
@@ -83,13 +84,9 @@
             this.Controls.Add(this.msMaintain);
             this.MainMenuStrip = this.msMaintain;
             this.Name = "InventoryForm";
-
+            this.Text = "Inventory";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InventoryForm_FormClosing);
             this.Load += new System.EventHandler(this.InventoryForm_Load);
-
-            this.Text = "Inventory";
-
-
             this.msMaintain.ResumeLayout(false);
             this.msMaintain.PerformLayout();
             this.ResumeLayout(false);

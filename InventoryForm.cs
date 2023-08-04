@@ -31,7 +31,8 @@ namespace Edibelle
 
             cUser = CurrentUser;
 
-            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.Dock = DockStyle.Top;
+            dataGridView1.Height = 1000;
             reloadButton.Text = "Reload";
             submitButton.Text = "Submit";
             printButton.Text = "Print";
@@ -48,7 +49,7 @@ namespace Edibelle
             panel.Controls.AddRange(new Control[] { reloadButton, submitButton, printButton });
 
             Controls.AddRange(new Control[] { dataGridView1, panel });
-            Load += new EventHandler(InventoryForm_Load);
+            
             Text = "Inventory";
         }
 
@@ -81,8 +82,12 @@ namespace Edibelle
                 // Bind the DataGridView to the BindingSource
                 // and load the data from the database.
                 dataGridView1.DataSource = bindingSource1;
-                GetData("select * from Inventory");
-
+                GetData("select PLU, [Name], Decription, Organic,[Out of Stock], Inventory.Loc_ID, Location.Loc_Name  from Inventory LEFT JOIN Location ON Inventory.Loc_ID = Location.Loc_ID");
+                
+                
+                //dataGridView1.Columns["Loc_ID"].Visible = false;
+                //dataGridView1.Columns["Loc_Name"].Visible = false;
+                //AddComboboxColumn();
             }
             catch (Exception ex) //when error occurs, show in message box
             {
@@ -131,6 +136,8 @@ namespace Edibelle
                 dataAdapter.Fill(table);
                 bindingSource1.DataSource = table;
 
+
+
                 // Resize the DataGridView columns to fit the newly loaded content.
                 dataGridView1.AutoResizeColumns(
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
@@ -144,8 +151,24 @@ namespace Edibelle
             }
         }
 
+        private void AddComboboxColumn()
+        {
+            DataGridViewComboBoxColumn ColComboBox = new DataGridViewComboBoxColumn();
+            dataGridView1.Columns.Add(ColComboBox);
+            
+            ColComboBox.HeaderText = "Location";
+            ColComboBox.ValueType = typeof(string);
+            ColComboBox.DisplayStyle = DataGridViewComboBoxDisplayStyle.DropDownButton;
+            ColComboBox.DisplayIndex = 5;
+            ColComboBox.Width = 150;
+            ColComboBox.DataSource = bindingSource1;
+            ColComboBox.DisplayMember = "Loc_Name";
+            ColComboBox.ValueMember = "Loc_ID";
+            ColComboBox.Name = "Loc_ID";
+            ColComboBox.DataPropertyName = "Loc_ID";
+        }
 
-        private void InventoryForm_FormClosing(object sender, FormClosingEventArgs e)
+    private void InventoryForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             //closing inventory form
 
