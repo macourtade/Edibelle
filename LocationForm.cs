@@ -7,14 +7,17 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
+using System.IO;
 
 namespace Edibelle
 {
+
+    //forming location form + attributes
     public partial class LocationForm : Form
     {
         private DataGridView dataGridView1 = new DataGridView();
@@ -22,33 +25,46 @@ namespace Edibelle
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
-
+        private Button printButton = new Button();
 
         public LocationForm()
         {
-            InitializeComponent();
-
-
-            dataGridView1.Dock = DockStyle.Fill;
-
-            reloadButton.Text = "Reload";
-            submitButton.Text = "Submit";
-            reloadButton.Click += new EventHandler(ReloadButton_Click);
-            submitButton.Click += new EventHandler(SubmitButton_Click);
-
-            FlowLayoutPanel panel = new FlowLayoutPanel
+            //syncing location form & datagrid with buttons and event handlers
+            try
             {
-                Dock = DockStyle.Top,
-                AutoSize = true
-            };
+                InitializeComponent();
 
-            panel.Controls.AddRange(new Control[] { reloadButton, submitButton });
 
-            Controls.AddRange(new Control[] { dataGridView1, panel });
-            Load += new EventHandler(LocationForm_Load);
-            Text = "Locations";
+                dataGridView1.Dock = DockStyle.Fill;
 
+                reloadButton.Text = "Reload";
+                submitButton.Text = "Submit";
+                printButton.Text = "Print";
+                reloadButton.Click += new EventHandler(ReloadButton_Click);
+                submitButton.Click += new EventHandler(SubmitButton_Click);
+                printButton.Click += new EventHandler(PrintButton_Click);
+
+
+                FlowLayoutPanel panel = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Top,
+                    AutoSize = true
+                };
+
+                panel.Controls.AddRange(new Control[] { reloadButton, submitButton, printButton });
+
+                Controls.AddRange(new Control[] { dataGridView1, panel });
+                Load += new EventHandler(LocationForm_Load);
+                Text = "Locations";
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
         }
+
         // MY Connection String
         /*
          * Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\Edibelle\DB\edibelle.mdf;Integrated Security = True; Connect Timeout = 30
@@ -69,9 +85,16 @@ namespace Edibelle
         }
 
         private void SubmitButton_Click(object sender, EventArgs e)
-        {
-            // Update the database with changes.
-            dataAdapter.Update((DataTable)bindingSource1.DataSource);
+        { // Update the database with changes.
+            try
+            {
+
+                dataAdapter.Update((DataTable)bindingSource1.DataSource);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sorry, you entered the wrong thing \n\n" + ex.Message);
+            }
         }
 
         private void GetData(string selectCommand)
@@ -104,12 +127,62 @@ namespace Edibelle
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
             catch (SqlException)
+
+            //if an exception is caught, message box should show exception
             {
                 MessageBox.Show("To run this example, replace the value of the " +
                     "connectionString variable with a connection string that is " +
                     "valid for your system.");
             }
         }
+
+
+
+        private void LocationForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //closing location form
+
+        }
+
+
+
+        private void PrintButton_Click(object sender, EventArgs e)
+        {
+            // printLocation.Print();
+
+
+            string s = "";
+
+            //TODO: here is accessing row by col  
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++) //for each row index in the data grid view 
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++) //for each col index in the data grid view 
+                {
+                    s += dataGridView1[j, i].Value; //acess the col and row index then select the value 
+                    if (j < dataGridView1.Rows.Count - 1) //if this is not the last col
+                    {
+                        s += ",";  //add a comma before the next value 
+                    }
+                }
+                s += "\n"; //at the end of processing one row, add a newline char 
+            }
+
+            MessageBox.Show(s); //visually verify 
+
+            //string s needs to be printed to a file --<> will result in a "csv" file that excel should be able to open 
+
+
+            //exporting location form to csv file
+
+            using (StreamWriter sw = new StreamWriter("All_Locations.csv")) //make a streamwriter
+            {
+                sw.WriteLine(s); //write this one big ass strign to the file 
+                sw.Flush();
+            }
+
+        }
+
     }
 }
 
