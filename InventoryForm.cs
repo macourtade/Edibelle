@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
@@ -21,25 +22,30 @@ namespace Edibelle
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
+        private Button printButton = new Button();
 
         public InventoryForm(DataTable CurrentUser)
         {
+            //syncing inventory form & datagrid with buttons & event handlers
             InitializeComponent();
-            
+
             cUser = CurrentUser;
-            
+
             dataGridView1.Dock = DockStyle.Fill;
             reloadButton.Text = "Reload";
             submitButton.Text = "Submit";
+            printButton.Text = "Print";
             reloadButton.Click += new EventHandler(ReloadButton_Click);
             submitButton.Click += new EventHandler(SubmitButton_Click);
+            printButton.Click += new EventHandler(PrintButton_Click);
+
 
             FlowLayoutPanel panel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
                 AutoSize = true
             };
-            panel.Controls.AddRange(new Control[] { reloadButton, submitButton });
+            panel.Controls.AddRange(new Control[] { reloadButton, submitButton, printButton });
 
             Controls.AddRange(new Control[] { dataGridView1, panel });
             Load += new EventHandler(InventoryForm_Load);
@@ -47,16 +53,18 @@ namespace Edibelle
         }
 
 
-        // MY Connection String
-        /*
-         * Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\Edibelle\DB\edibelle.mdf;Integrated Security = True; Connect Timeout = 30
-        */
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("Sorry, there is an issue with the data you are trying to save.  Please check the formatting");
+            //e.Cancel = true;
+
+        }
 
         private void InventoryForm_Load(object sender, EventArgs e)
         {
+            //loading inventory form
             try
             {
-                
                 foreach (DataRow dr in cUser.Rows)
                 {
                     if (dr["isAdmin"].Equals(false))
@@ -66,27 +74,29 @@ namespace Edibelle
                     else
                     {
                         msMaintain.Enabled = true;
-                        
+
                     }
-                    
+
                 }
                 // Bind the DataGridView to the BindingSource
                 // and load the data from the database.
                 dataGridView1.DataSource = bindingSource1;
                 GetData("select * from Inventory");
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex) //when error occurs, show in message box
             {
                 MessageBox.Show(ex.Message);
             }
-            
-           
 
-           
+
+
+
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
         {
+            //reload button, reset any newly added data and adds it to database
             // Reload the data from the database.
             GetData(dataAdapter.SelectCommand.CommandText);
         }
@@ -102,8 +112,7 @@ namespace Edibelle
             try
             {
                 // Specify a connection string.
-                // Replace <SQL Server> with the SQL Server for your Northwind sample database.
-                // Replace "Integrated Security=True" with user login information if necessary.
+
                 String connectionString =
                     @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Projects\Edibelle\DB\edibelle.mdf;Integrated Security=True;Connect Timeout=30";
 
@@ -126,21 +135,25 @@ namespace Edibelle
                 dataGridView1.AutoResizeColumns(
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException sqlex)
+            //if exception is caught, should display in message box
+            catch (Exception ex)
             {
-                MessageBox.Show(sqlex.Message);
+                MessageBox.Show("To run this example, replace the value of the " +
+                    "connectionString variable with a connection string that is " +
+                    "valid for your system.");
             }
         }
 
 
         private void InventoryForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            //closing inventory form
 
-            
         }
 
         private void tsmDepartments_Click(object sender, EventArgs e)
         {
+            //when department is pressed from maintain drop down, should show up
             DepartmentForm deptFrm = new DepartmentForm();
             deptFrm.ShowDialog();
 
@@ -164,6 +177,39 @@ namespace Edibelle
 
             //should we refresh inventory grid if we close one of the  maintain forms
             reloadButton.PerformClick();
+        }
+
+        private void PrintButton_Click(object sender, EventArgs e)
+        {
+            string s = "";
+
+            //TODO: here is accessing row by col  
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++) //for each row index in the data grid view 
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++) //for each col index in the data grid view 
+                {
+                    s += dataGridView1[j, i].Value; //acess the col and row index then select the value 
+                    if (j < dataGridView1.Rows.Count - 1) //if this is not the last col
+                    {
+                        s += ",";  //add a comma before the next value 
+                    }
+                }
+                s += "\n"; //at the end of processing one row, add a newline char 
+            }
+
+            MessageBox.Show(s); //visually verify 
+
+            //string s needs to be printed to a file --<> will result in a "csv" file that excel should be able to open 
+
+
+
+            //exporting iventory form to csv file
+            using (StreamWriter sw = new StreamWriter("All_Inventory.csv")) //make a streamwriter
+            {
+                sw.WriteLine(s); //write this one big ass strign to the file 
+                sw.Flush();
+            }
         }
     }
 }
